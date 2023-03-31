@@ -1,0 +1,84 @@
+:root {
+    --font-default: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-primary: "Amatic SC", sans-serif;
+    --font-secondary: "Inter", sans-serif;
+  }
+
+/* Colors */
+:root {
+    --color-default: #212529;
+    --color-primary: #FFCC97;
+    --color-secondary: #FDF4EB;
+    --color-secondary-dark: #f4e0cd;
+    --color-primary-dark: #ffa954;
+    --color-sub-bag:white;
+  }
+  body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-primary);
+  }
+  
+.container {
+    display: block;
+    border-radius: 10px;    
+    margin: 50px;
+    width: 60%;
+    overflow: hidden;
+    background-color:var(--color-sub-bag);
+}
+.result {
+  
+    background-color: green;
+    color: #fff;
+    padding: 20px;
+}
+.reader {
+    overflow: hidden;
+}
+.reader a{
+    color: var(--color-default);
+    text-decoration: none;
+}
+#reader__status_span{
+    color: var(--color-default) !important;
+    background:none !important;
+}
+.reader button{
+    background-color: var(--color-primary);
+    color: var(--color-sub-bag);
+    border: none;
+    border-radius: 5px;
+    padding: 5px!important;
+    margin: 10px!important;
+    visibility: hidden !important;
+}
+#reader__dashboard_section_swaplink{
+    text-decoration: none!important;
+    background-color: var(--color-primary);
+    color: var(--color-sub-bag);
+    border: none;
+    border-radius: 5px;
+    padding: 5px!important;
+    margin: 10px!important;
+
+}
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.col {
+    padding: 20px;
+}
+.scan_btn button{
+    background-color: var(--color-primary);
+    color: var(--color-sub-bag);
+    border: none;
+    font-size: 26px;
+    width: 200px;
+    margin: 10px;
+    border-radius: 5px;
+
+}

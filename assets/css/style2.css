@@ -1,0 +1,277 @@
+
+/* font */
+:root {
+    --font-default: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-primary: "Amatic SC", sans-serif;
+    --font-secondary: "Inter", sans-serif;
+  }
+
+/* Colors */
+:root {
+    --color-default: #212529;
+    --color-primary: #FFCC97;
+    --color-secondary: #FDF4EB;
+    --color-secondary-dark: #f4e0cd;
+    --color-primary-dark: #ffa954;
+    --color-sub-bag:white;
+  }
+
+  body{
+    background-image: url(../bag2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.log_btn{
+    margin: 0px 4% 0px 0px;
+    padding: 0px;
+    font-size: 22px;
+}
+.log_btn:hover{
+    color: var(--color-primary-dark);
+}
+.today-menu{
+    display: flex;
+    z-index: 100;
+    height: auto;
+    width: 100%;
+    border-radius: 10px;
+    padding: 0px 0px 0px 0px;
+    /* border: 2px solid black; */
+    
+    
+}
+.massage{
+    margin-top: 115px;
+    background-color:var(--color-secondary);
+    width: 60%;
+    border-radius: 10px;
+    padding: 10px;
+}
+.lunch,.dinner{
+    background-color: var(--color-secondary);
+    height: 300px;
+    margin: 20px;
+    width: 600px;
+    border: 2px solid var(--color-primary);
+    border-radius: 10px;
+    
+}
+
+
+.menu-content{
+    font-family: var(--font-secondary);
+    display: flex;
+    /* border: 1px solid black; */
+
+}
+
+.menu-text{
+    display: block;
+    width: 70%;
+    /* border: 1px solid black; */
+}
+
+.menu-text p{
+    font-size: 22px;
+    padding: 0px 0px 0px 20px;
+}
+.menu-opstions{
+    display: block;
+    width: 30%;
+    text-align: center;
+    /* border: 1px solid black; */
+}
+.menu-opstions button,.btn-book-a-table{
+    font-size: 14px;
+    color: var(--color-sub-bag);
+    background: var(--color-primary);
+    padding: 8px 20px;
+    margin: 20px 0px;
+    border-radius: 50px;
+    transition: 0.3s;
+    border: none;
+
+}
+.menu-opstions button:hover,.btn-book-a-table:hover,.poll button:hover,.prefrence button:hover{
+    background: var(--color-primary-dark);
+}
+.menu-opstions p{
+    font-size: 28px;
+    color: var(--color-default);
+    margin-top: 40%;
+}
+.menu-title{
+    text-align: center;
+    margin: 5px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #000;
+    font-family: var(--font-secondary);
+}
+
+
+.prefrence{
+    background-color: var(--color-secondary);
+    height: 300px;
+    width: 600px;
+    margin: 20px;
+    border: 2px solid var(--color-primary);
+    border-radius: 10px;
+}
+.poll{
+    background-color: var(--color-secondary);
+    height: 300px;
+    margin: 20px;
+    width: 600px;
+    border: 2px solid var(--color-primary);
+    border-radius: 10px;
+    
+}
+.poll-title{
+    text-align: center;
+    margin: 5px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #000;
+    font-family: var(--font-secondary);
+}
+
+.poll-content{
+    font-size: 22px;
+    padding: 0px 30px;
+   
+}
+
+.progress-bar{
+    background-color: var(--color-primary-dark);
+}
+
+
+.poll button,.prefrence button{
+    font-size: 14px;
+    color: var(--color-sub-bag);
+    background: var(--color-primary);
+    padding: 8px 20px;
+    margin: 20px 0px;
+    border-radius: 50px;
+    transition: 0.3s;
+    border: none;
+}
+
+
+/* subscripstion.php */
+.container{
+    display: block;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.subscripstion{
+
+    background-color: var(--color-sub-bag);
+    margin: 20px;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid var(--color-primary);
+}
+
+.sub-btn button{
+
+    background-color: var(--color-sub-bag);
+    height: 50px;
+    width: 33%;
+    margin: 0px;
+    border: none;
+    border-bottom: 2px solid var(--color-primary);
+}
+
+.sub-btn button:hover{
+    border-bottom: 3px solid var(--color-primary-dark);
+}
+.contex{
+    display: flex;
+}
+.sub-content{
+    margin: 20px;
+    width: 100%;
+}
+.sub-content button{
+    font-size: 18px;
+    color: var(--color-sub-bag);
+    background: var(--color-primary);
+    padding: 8px 20px;
+    margin: 80px 0px 20px 0px;
+    border-radius: 50px;
+    transition: 0.3s;
+    border: none;
+}
+
+.sub-content button:hover{
+    background: var(--color-primary-dark);
+}
+
+.sub-content input{
+    color: var(--color-primary-dark);
+    border: none;
+    border-bottom: 1px solid var(--color-primary-dark);
+    height: 40px;
+    font-size: 16px;
+    padding-left: 5px;
+    margin: 0px 10px 20px 10px;
+    width: 90%;
+    background-color: var(--color-sub-bag);
+}
+.sub-content input::placeholder{
+    color: var(--color-primary-dark);
+    font-size: 18px;
+    font-family: var(--font-secondary);
+    outline: none;
+    padding-left: 5px;
+}
+
+#t-meal{
+    padding-left: 2px;
+    width: 25%;
+    }
+#ex-date{
+width: 55%;
+}
+
+#ex-date-l{
+    margin-left: 9%;
+}
+.sub-content label{    
+    margin: 10px;
+    font-size: 22px;
+    color: var(--color-default);
+    font-family: var(--font-secondary);
+}
+
+.sub-type input{
+    width: 7%;
+    height: 18px;
+    background-color: var(--color-sub-bag);
+    accent-color: var(--color-primary-dark);
+}
+
+.sub-type label{
+    margin: 5px;
+}
+
+.image_div img{
+    height: 500px;
+    width: 500px;
+    margin: 60px;
+}
+
+/* sub_weak */
+
+
+#s_date,#e_date{
+width: 43%;
+}
+#e_date_l{
+    margin-left: 27%;
+}
