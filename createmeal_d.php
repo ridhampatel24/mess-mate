@@ -52,8 +52,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <title>Create Dinner</title>
 </head>
 <body>
-
-
 <div class="container mt-5 mb-5 d-flex justify-content-center">
     <div class="card px-1 py-4">
       <div class="card-body">
