@@ -30,7 +30,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['payment_btn'])){
     $sql = "INSERT INTO `payment`(`user_id`, `invoice_id`, `t_meal`, `s_date`, `e_date`, `ex_date`, `type_meal`, `total`, `date_payment`) VALUES ('$user_id','$invoice_id','$t_meal','$s_date','$e_date','$ex_date','$type_meal','$total',NOW())";
     $result = mysqli_query($conn,$sql);
 
-    if($result){
+    $sql2 = "UPDATE `token` SET `tokens` = `tokens` + '$t_meal', `start_date` = '$s_date', `end_time` = '$e_date', `estime` = '$ex_date' WHERE `userid` = '$user_id'";
+    $result2 = mysqli_query($conn,$sql2);
+
+    if($result && $result2){
         echo "
         <script>
         alert('Payment Successfull');
@@ -147,11 +150,5 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['payment_btn'])){
         </div>
     </div>
 </body>
-
-<script>
-    if (window.history.replaceState) {
-      window.history.replaceState(null, null, window.location.href);
-    }
-</script>
 
 </html>

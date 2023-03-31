@@ -2,7 +2,7 @@
 
 require 'database/include.php';
 
-if (!isset($_SESSION['userno']) && !isset($_SESSION['admin'])) {
+if ($_SESSION['user_type'] != 'admin') {
   header('location: login.php');
   exit();
 }
@@ -117,8 +117,8 @@ $sql1 = "SELECT * FROM `users` WHERE `mobile` = '$mobile'";
                 <button type="button" onclick = "window.location.href='qrpage_d.php';" class="btn btn-outline-dark me-1 flex-grow-1" >Dinner QR</button>
                 <button type="button" onclick = "window.location.href='createmeal_l.php';" class="btn btn-outline-dark me-1 flex-grow-1" >Create Lunch menu</button>
                 <button type="button" onclick = "window.location.href='createmeal_d.php';"class="btn btn-outline-dark me-1 flex-grow-1" >Create Dinner menu</button>
-                <button type="button" onclick = "window.location.href='qrpage.php';" class="btn btn-outline-dark me-1 flex-grow-1" >Live meal</button>
-                <button type="button" onclick = "window.location.href='qrpage.php';" class="btn btn-outline-dark me-1 flex-grow-1" >Create Poll</button>
+                <button type="button" onclick = "window.location.href='#';" class="btn btn-outline-dark me-1 flex-grow-1" >Live meal</button>
+                <button type="button" onclick = "window.location.href='adminpoll.php';" class="btn btn-outline-dark me-1 flex-grow-1" >Create Poll</button>
               </div>
               
               <div class="d-flex justify-content-start rounded-3 p-2 mb-2">

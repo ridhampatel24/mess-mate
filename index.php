@@ -74,6 +74,13 @@ if($token > 0 && $status && $tdate <= $edate){
   <link href="assets/css/style2.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/b4acf271a3.js" crossorigin="anonymous"></script>
 
+  <!-- =======================================================
+  * Template Name: Yummy
+  * Updated: Mar 10 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
 
 <body>
@@ -147,7 +154,7 @@ if($token > 0 && $status && $tdate <= $edate){
           <div class="menu-opstions">
             ';
             if($scan){
-              echo '<button>scan</button>';
+              echo '<button onclick="toscanner()" >scan</button>';
             }elseif($tkn){
               echo '<button>Reserve a plate</button>';
             }elseif($status == 0){
@@ -156,7 +163,7 @@ if($token > 0 && $status && $tdate <= $edate){
               echo '<button>Reserve a plate</button>';
             }
             echo '
-            <p>'.$price .' RS.</p>
+            <p>'.$price .' &#8377;</p>
           </div>
           ';
       }else{
@@ -240,7 +247,7 @@ if($token > 0 && $status && $tdate <= $edate){
             echo '<button>Reserve a plate</button>';
           }
           echo '
-            <p>'.$price .' RS.</p>
+            <p>'.$price .' &#8377;</p>
           </div>
         </div>
       </div>
@@ -286,15 +293,18 @@ if($token > 0 && $status && $tdate <= $edate){
 <div>
     <div class="poll">
       <?php 
+      $tdate = date("Y-m-d");
 
-      $sql = "SELECT * FROM `poll`";
+      $sql = "SELECT * FROM `poll` where `last_date` >= '$tdate' ";
       $result = mysqli_query($conn, $sql);
       $row = mysqli_fetch_assoc($result);
+      
+      if($row > 0){
       $users = explode(',', $row['users']);
 
 
       if(in_array($uid, $users)){
-        $sql = "SELECT * FROM `poll`";
+        $sql = "SELECT * FROM `poll` where `last_date` >= '$tdate'";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
         $que = $row['pol'];
@@ -329,7 +339,7 @@ if($token > 0 && $status && $tdate <= $edate){
                 }
       } else{
         echo "<form action='poll.php' method='POST'>";
-        $sql = "SELECT * FROM `poll`";
+        $sql = "SELECT * FROM `poll` where `last_date` >= '$tdate'";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
         $que = $row['pol'];
@@ -340,14 +350,23 @@ if($token > 0 && $status && $tdate <= $edate){
         </div> 
         <div class="poll-content">';
         for($i=0; $i<sizeof($options); $i++){
-          echo '<input type="radio" name="poll" id="'.$i.'" required value="'.$i.'"> <label for="'.$i.'">'.$options[$i].'</label><br>
+          echo '<input type="radio" name="poll" id="'.$i.'" required value="'.$i.'">  <label for="'.$i.'">'.$options[$i].'</label><br>
           ';
         }
         echo '</div>
+        <input type="hidden" name="pollid" value="'.$row['id'].'">
         <center><button name="pollbtn">Submit</button></center>';
         echo "</form> ";
       }
+    }else{
+      echo "
+      <div class='poll-title'>
+        No Poll Available
+      </div>
+      ";
+    }
       ?>
+     
       <!-- <div class="poll-title">
         Tomorrow's Meal Suggestion?
       </div>
@@ -405,7 +424,7 @@ if($token > 0 && $status && $tdate <= $edate){
           <div>
             <h4>Opening Hours</h4>
             <p>
-              <strong>Lunch: 12AM</strong> - 2PM<br>
+              <strong>Lunch: 12PM</strong> - 2PM<br>
               <strong>Dinner: 7PM</strong> - 10PM<br>
               
             </p>
@@ -458,11 +477,9 @@ if($token > 0 && $status && $tdate <= $edate){
   <script src="assets/js/main.js"></script>
 
 </body>
-
 <script>
-    if (window.history.replaceState) {
-      window.history.replaceState(null, null, window.location.href);
-    }
-</script>
-
+  function toscanner(){
+    window.location.href = "scaner.php";
+  }
+  </script>
 </html>

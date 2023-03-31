@@ -12,15 +12,24 @@
 :root {
     scroll-behavior: smooth;
   }
-  
+  :root {
+    --color-default: #212529;
+    --color-primary: #FFCC97;
+    --color-secondary: #FDF4EB;
+    --color-secondary-dark: #f4e0cd;
+    --color-primary-dark: #ffa954;
+    --color-sub-bag:white;
+  }
+
   body {
+    margin:300px;
     font-family: "Open Sans", sans-serif;
-    background: #f6f9ff;
+    background: var(--color-primary);
     color: #444444;
   }
   
   a {
-    color: #4154f1;
+    color: #FFCC97;
     text-decoration: none;
   }
   
@@ -64,7 +73,8 @@
     font-size: 24px;
     margin-bottom: 0;
     font-weight: 600;
-    color: #012970;
+    color: #ec08ba;
+
   }
   
   /*--------------------------------------------------------------
@@ -77,22 +87,47 @@
     right: 15px;
     bottom: 15px;
     z-index: 99999;
-    background: #4154f1;
+    background: #f141c5;
     width: 40px;
     height: 40px;
     border-radius: 4px;
     transition: all 0.4s;
   }
-  
+  .submit {
+      color: white;
+      background-color: #FFCC97;
+      border: none;
+  }
+  .submit:hover {
+      background-color: #ffa954;
+      border: none;
+
+  }
+  .btn btn-primary {
+    color:#b4256e;
+    font:16px;
+    background-color: red;
+    padding: 6px 12;
+    bottom: #fd0dad;
+  }
+  .reset {
+    color: white;
+    background-color: #FFCC97;
+    border: none;
+  }
+.reset:hover {
+  background-color: #ffa954;
+  border: none;
+}
   .back-to-top i {
     font-size: 24px;
-    color: #fff;
+    color: #e11212;
     line-height: 0;
   }
   
   .back-to-top:hover {
     background: #6776f4;
-    color: #fff;
+    color: #e11212;
   }
   
   .back-to-top.active {
@@ -156,7 +191,7 @@
       content: "";
       width: 13px;
       height: 13px;
-      background: #fff;
+      background: #e11212;
       position: absolute;
       top: -7px;
       right: 20px;
@@ -202,8 +237,8 @@
   }
   
   .bg-warning-light {
-    background-color: #fff3cd;
-    border-color: #fff3cd;
+    background-color: #e11212;
+    border-color: #e11212;
   }
   
   .bg-info-light {
@@ -227,7 +262,7 @@
   .card-header,
   .card-footer {
     border-color: #ebeef4;
-    background-color: #fff;
+    background-color: #e11212;
     color: #798eb3;
     padding: 15px;
   }
@@ -236,7 +271,7 @@
     padding: 20px 0 15px 0;
     font-size: 18px;
     font-weight: 500;
-    color: #012970;
+    color: black;
     font-family: "Poppins", sans-serif;
   }
   
@@ -245,13 +280,17 @@
     font-size: 14px;
     font-weight: 400;
   }
-  
+  .progress-bar {
+    background-color: #ffcc97;
+  }
   .card-body {
-    padding: 0 20px 20px 20px;
+    padding: 10px 20px 20px 20px;
+    background-color:#FDF4EB ;
+    border-radius:10px ;
   }
   
   .card-img-overlay {
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color:#FDF4EB;
   }
   
   /* Alerts */
@@ -282,7 +321,7 @@
   }
   
   .accordion-button:not(.collapsed) {
-    color: #012970;
+    color: #e11212;
     background-color: #f6f9ff;
   }
   
@@ -294,7 +333,7 @@
   
   .accordion-flush .accordion-button:not(.collapsed) {
     box-shadow: none;
-    color: #4154f1;
+    color: #FFCC97;
   }
   
   .accordion-flush .accordion-body {
@@ -346,7 +385,7 @@
   }
   
   .nav-tabs-bordered .nav-link.active {
-    background-color: #fff;
+    background-color: #e11212;
     color: #4154f1;
     border-bottom: 2px solid #4154f1;
   }
@@ -372,7 +411,7 @@
   .logo span {
     font-size: 26px;
     font-weight: 700;
-    color: #012970;
+    color: #700101;
     font-family: "Nunito", sans-serif;
   }
   
@@ -381,7 +420,7 @@
     z-index: 997;
     height: 60px;
     box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
-    background-color: #fff;
+    background-color: #e11212;
     padding-left: 20px;
     /* Toggle Sidebar Button */
     /* Search Bar */
@@ -391,7 +430,7 @@
     font-size: 32px;
     padding-left: 10px;
     cursor: pointer;
-    color: #012970;
+    color: #700101;
   }
   
   .header .search-bar {
@@ -451,7 +490,7 @@
   }
   
   .header .search-form button i {
-    color: #012970;
+    color: #e11212;
   }
   
   /*--------------------------------------------------------------
@@ -473,7 +512,7 @@
     position: relative;
   }
   
-  .header-nav .nav-profile {
+  .header-nav .nav-gfile {
     color: #012970;
   }
   
@@ -610,7 +649,7 @@
     scrollbar-width: thin;
     scrollbar-color: #aab7cf transparent;
     box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
-    background-color: #fff;
+    background-color: #e11212;
   }
   
   @media (max-width: 1199px) {
@@ -622,7 +661,7 @@
   .sidebar::-webkit-scrollbar {
     width: 5px;
     height: 8px;
-    background-color: #fff;
+    background-color: #e11212;
   }
   
   .sidebar::-webkit-scrollbar-thumb {
@@ -699,7 +738,7 @@
   
   .sidebar-nav .nav-link.collapsed {
     color: #012970;
-    background: #fff;
+    background: #e11212;
   }
   
   .sidebar-nav .nav-link.collapsed i {
@@ -865,7 +904,7 @@
     line-height: 0;
     border-radius: 50%;
     flex-shrink: 0;
-    border: 3px solid #fff;
+    border: 3px solid #e11212;
     flex-grow: 0;
   }
   
@@ -970,7 +1009,7 @@
   }
   
   .iconslist .icon {
-    background-color: #fff;
+    background-color: #e11212;
     border-radius: 0.25rem;
     text-align: center;
     color: #012970;
@@ -1015,7 +1054,7 @@
   .profile .profile-card .social-links a {
     font-size: 20px;
     display: inline-block;
-    color: rgba(1, 41, 112, 0.5);
+    color: rgba(112, 1, 1, 0.5);
     line-height: 0;
     margin-right: 10px;
     transition: 0.3s;
@@ -1090,7 +1129,7 @@
   
   .contact .php-email-form .error-message {
     display: none;
-    color: #fff;
+    color: #e11212;
     background: #ed3c0d;
     text-align: left;
     padding: 15px;
@@ -1100,7 +1139,7 @@
   
   .contact .php-email-form .sent-message {
     display: none;
-    color: #fff;
+    color: #e11212;
     background: #18d26e;
     text-align: center;
     padding: 15px;
@@ -1110,7 +1149,7 @@
   
   .contact .php-email-form .loading {
     display: none;
-    background: #fff;
+    background: #e11212;
     text-align: center;
     padding: 15px;
     margin-bottom: 24px;
@@ -1150,16 +1189,16 @@
   }
   
   .contact .php-email-form button[type=submit] {
-    background: #4154f1;
+    background: #FFCC97;
     border: 0;
     padding: 10px 30px;
-    color: #fff;
+    color: #e11212;
     transition: 0.4s;
     border-radius: 4px;
   }
   
   .contact .php-email-form button[type=submit]:hover {
-    background: #5969f3;
+    background: #FFCC97;
   }
   
   @keyframes animate-loading {
@@ -1196,7 +1235,7 @@
   
   .error-404 .btn {
     background: #51678f;
-    color: #fff;
+    color: #e41665;
     padding: 8px 30px;
   }
   
@@ -1217,7 +1256,7 @@
     padding: 20px 0;
     font-size: 14px;
     transition: all 0.3s;
-    border-top: 1px solid #cddfff;
+    border-top: 1px solid #FDF4EB;
   }
   
   .footer .copyright {

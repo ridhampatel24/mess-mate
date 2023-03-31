@@ -172,8 +172,8 @@ if($dinner_row > 0){
           echo '
           <p>'.$lunch_price .' &#8377;</p>
           </div>
+          </div>
         </div>
-        </div
       ';
      }else{
       echo '
@@ -185,13 +185,12 @@ if($dinner_row > 0){
       <div class="menu-text">
       <p>Menu is not available yet!</p>
       </div>
-      </div>
-      </div>
+        </div>
       </div>
       ';
       
      }
-      ?>
+?>
     
          <!-- end lunch  -->
 
@@ -238,7 +237,6 @@ if($dinner_row > 0){
       }
 
       ?>
-     
 
       <!-- end dinner  -->
     </div>
@@ -402,11 +400,5 @@ if($dinner_row > 0){
   <script src="assets/js/main.js"></script>
 
 </body>
-
-<script>
-    if (window.history.replaceState) {
-      window.history.replaceState(null, null, window.location.href);
-    }
-</script>
 
 </html>

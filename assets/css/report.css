@@ -1,10 +1,17 @@
 :root {
   scroll-behavior: smooth;
 }
+:root {
+  --color-default: #212529;
+  --color-primary: #ce1212;
+  --color-secondary: #37373f;
+  --color-primary-dark: #ffa954;
+}
 
 body {
   font-family: "Open Sans", sans-serif;
-  background: #f6f9ff;
+   background-color: var(--color-primary-dark);
+
   color: #444444;
 }
 
@@ -42,7 +49,14 @@ h6 {
   }
 }
 
-
+.report_div{
+  margin:5%;
+}
+.row{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
 /* Card */
 .card {
   margin-bottom: 30px;
@@ -367,4 +381,8 @@ h6 {
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #666;
+}
+
+.section{
+  padding: 35px 0;
 }

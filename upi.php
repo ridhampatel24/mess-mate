@@ -123,9 +123,5 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['payment_btn'])){
         </div>
     </div>
 </body>
-<script>
-    if (window.history.replaceState) {
-      window.history.replaceState(null, null, window.location.href);
-    }
-</script>
+
 </html>

@@ -17,10 +17,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['create'])){
     $opt4 = $_POST['opt4'];
 
     $opt = $opt1."||||" . $opt2."||||" . $opt3."||||" . $opt4;
-    $votes = "0||||0||||0||||0";
 
 
-    $sql = "INSERT INTO `poll`(`pol`, `options`, `votes`) VALUES ('$que','$opt','$votes')";
+    $sql = "INSERT INTO `poll`(`pol`, `options`) VALUES ('$que','$opt')";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
    
@@ -44,14 +43,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['create'])){
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="css/poll.css" rel="stylesheet">
+  <link href="./css/poll.css" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/poll.css"> 
+
     <title>Poll</title>
 </head>
 <body>
-<section class="section">
-<div class="row">
 
-<div class="col-lg-6">
 <div class="card">
             <div class="card-body">
               <h5 class="card-title">Create Poll</h5>
@@ -77,58 +75,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['create'])){
                   <input type="text" class="form-control" name="opt4" required id="inputAddress" >
                 </div>
                 <div class="text-center">
-                  <button type="submit" name="create" class="btn btn-primary">Submit</button>
-                  <button type="reset" class="btn btn-secondary">Reset</button>
+                  <button type="submit" name="create" class="btn btn-primary submit">Submit</button>
+                  <button type="reset" class="btn btn-secondary reset">Reset</button>
                 </div>
               </form>
             </div>
     </div>
-</div>
-</div>
-</section>
 
-<section class="section">
-    <div class="row">
-
-      <div class="col-lg-6">
-          <div class="card">
-            <div class="card-body">
-                <h5> Poll Result</h5>
-                <div>
-                <?php
-                 $sql = "SELECT * FROM `poll`";
-                 $result = $conn->query($sql);
-                 
-                 foreach($result as $row){
-                    echo "<h6>".$row['pol']."</h6>";
-                    $opt = explode("||||",$row['options']);
-                    $votes = explode("||||",$row['votes']);
-                    for($i = 0; $i<count($opt); $i++){
-                        $votePercent = '0%';
-                        if($votes[$i] && $row['total_votes']){
-                            $votePercent = round(($votes[$i]/$row['total_votes'])*100);
-                            $votePercent = !empty($votePercent) ? $votePercent.'%' : '0%';
-                        }
-                        echo "
-                        <h5>".$opt[$i]."</h5>
-                        <div class='progress'>
-                            <div class='progress-bar' role='progressbar' style='width: ".$votePercent."' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'>".$votePercent."</div>
-                            </div>";
-                        
-
-                    }
-                }
-                ?>
-                </div>
+   
           </div>
-          </div>
-      </div></div>
-</section>
+
 
 </body>
-<script>
-    if (window.history.replaceState) {
-      window.history.replaceState(null, null, window.location.href);
-    }
-</script>
 </html>

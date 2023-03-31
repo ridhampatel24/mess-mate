@@ -18,34 +18,32 @@ if (isset($_POST['result'])) {
     $row1 = mysqli_fetch_assoc($result1);
     $users1 = explode(",", $row1['added_user']);
 
-    if (in_array($_SESSION['id'], $users1)) {
+    $sql3 = "SELECT * FROM `meal` WHERE `id` = '$str[0]'";
+    $result3 = mysqli_query($conn, $sql1);
+    $row3 = mysqli_fetch_assoc($result1);
+    $users3 = explode(",", $row1['users']);
 
-        $sql2 = "UPDATE `meal` SET `users`=CONCAT(`users`,',',$_SESSION[id]) WHERE `id` = '$str[0]'";
-        $result2 = mysqli_query($conn, $sql2);
-    } else {
-        $sql3 = "SELECT * FROM `meal` WHERE `id` = '$str[0]'";
-        $result3 = mysqli_query($conn, $sql1);
-        $row3 = mysqli_fetch_assoc($result1);
-        $users3 = explode(",", $row1['users']);
+    if (in_array($_SESSION['id'], $users3)) {
+        echo "<script>alert('You already Take meal!');
+        window.location.href = 'profile.php';</script>";
+    }
+    else{
+        if (in_array($_SESSION['id'], $users1)) {
 
-        if(in_array($_SESSION['id'], $users3)){
-            echo "<script>alert('You already Take meal!');</script>";
-        }
-        else{
+            $sql2 = "UPDATE `meal` SET `users`=CONCAT(`users`,',',$_SESSION[id]) WHERE `id` = '$str[0]'";
+            $result2 = mysqli_query($conn, $sql2);
+
+        } else {
+
             echo "<script>alert('no1');</script>";
             $sql = "UPDATE `token` SET `tokens`=`tokens`-1 WHERE `id` = 1;";
             $sql2 = "UPDATE `meal` SET `users`=CONCAT(`users`,',',$_SESSION[id]) WHERE `id` = '$str[0]'";
             $result2 = mysqli_query($conn, $sql2);
             $result = mysqli_query($conn, $sql);
-            
         }
-
-       
+        echo "<script>
+        window.location.href = 'profile.php';</script>";
     }
-    echo "
-    <script>
-    window.location.href = 'profile.php';
-    </script>";
 }
 
 
@@ -127,9 +125,5 @@ if (isset($_POST['result'])) {
         });
     html5QrcodeScanner.render(onScanSuccess, onScanError);
 </script>
-<script>
-    if (window.history.replaceState) {
-      window.history.replaceState(null, null, window.location.href);
-    }
-</script>
+
 </html>

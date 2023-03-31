@@ -9,13 +9,37 @@ if (!isset($_SESSION['userno'])) {
 
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay_btn'])){
 
+  $check_token = "SELECT * FROM `token` WHERE `mobno` = ". $_SESSION['userno'] ." ";
+  $check_token_result = mysqli_query($conn, $check_token);
+  $check_token_row = mysqli_fetch_assoc($check_token_result);
+
+  if($check_token_row){
+  $estime = $check_token_row['estime'];
+  $token = $check_token_row['tokens'];
+  $end_dated = $check_token_row['end_time'];
+  $start_dated = $check_token_row['start_date'];
+  
+  $token_id = $check_token_row['id'];
+  $extime = $_POST['ex_date'];
+  $start_date = $_POST['s_date'];
+  $end_date = $_POST['e_date'];
+  if($token == 0){
+    $can_buy = true;
+  }else{
+    if($extime < $estime || $start_date < $end_dated || $end_date < $end_dated || $start_date < $start_dated || $end_date < $start_dated){
+      $can_buy = false;
+    }else{
+        $can_buy = true;
+      }
+  }
+ 
+  if($can_buy){
   $_SESSION["t_meal"]= $_POST['t_meal'];
   $_SESSION["t_price"]= $_POST['t_price'];
   $_SESSION["s_date"]= $_POST['s_date'];
   $_SESSION["e_date"]= $_POST['e_date'];
   $_SESSION["ex_date"]= $_POST['ex_date'];
   $_SESSION["type_meal"]= $_POST['sub-type'];
- 
 
   if($_POST['t_meal'] >=20 && $_POST['t_meal'] <= 49){
     $_SESSION["discont"]= $_POST['t_price'] * 0.05;
@@ -35,8 +59,42 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay_btn'])){
     <script>
     window.location.href = 'payment.php';
     </script>";
-  
+}else{
+  echo "
+    <script>
+    alert('You have already purchased token for that time period!');
+    </script>";
 }
+  }
+  else{
+    $_SESSION["t_meal"]= $_POST['t_meal'];
+    $_SESSION["t_price"]= $_POST['t_price'];
+    $_SESSION["s_date"]= $_POST['s_date'];
+    $_SESSION["e_date"]= $_POST['e_date'];
+    $_SESSION["ex_date"]= $_POST['ex_date'];
+    $_SESSION["type_meal"]= $_POST['sub-type'];
+
+    if($_POST['t_meal'] >=20 && $_POST['t_meal'] <= 49){
+      $_SESSION["discont"]= $_POST['t_price'] * 0.05;
+    }
+    else if($_POST['t_meal'] >=50 && $_POST['t_meal'] <= 79){
+      $_SESSION["discont"]= $_POST['t_price'] * 0.10;
+    }
+    else if($_POST['t_meal'] >=80){
+      $_SESSION["discont"]= $_POST['t_price'] * 0.15;
+    }
+    else{
+      $_SESSION["discont"]= 0;
+    }
+
+    $_SESSION['invoice_id'] =  "TS".rand(10000000,99999999);
+    echo "
+      <script>
+      window.location.href = 'payment.php';
+      </script>";
+  }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -75,8 +133,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay_btn'])){
     <div class="container d-flex align-items-center justify-content-between">
 
       <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
+
         <h1>Mess-Mate<span>.</span></h1>
       </a>
 
@@ -123,9 +180,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay_btn'])){
 
           <div class="sub-type">
             <label>Meal Type</label><br>
-            <input type="radio" name="sub-type" id="lunch"  value="1" onclick="meal_count()"><label>Lunch</label>
-            <input type="radio" name="sub-type" id="dinner" value="2" onclick="meal_count()"><label>Dinner</label>
-            <input type="radio" name="sub-type" id="lun-din"  value="3" onclick="meal_count()"><label>Lunch & Dinner</label><br>
+            <input type="radio" name="sub-type" id="lunch"  value="1" onclick="meal_count()"><label for="lunch">Lunch</label>
+            <input type="radio" name="sub-type" id="dinner" value="2" onclick="meal_count()"><label for="dinner">Dinner</label>
+            <input type="radio" name="sub-type" id="lun-din"  value="3" onclick="meal_count()"><label for="lun-din">Lunch & Dinner</label><br>
           </div>
           <label id="t-meal-l">Total Meal</label><label id="ex-date-l">Expire Date</label><br>
           <input id="t-meal" type="text" disabled>
@@ -193,9 +250,5 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay_btn'])){
 
  
 </script>
-<script>
-    if (window.history.replaceState) {
-      window.history.replaceState(null, null, window.location.href);
-    }
-</script>
+
 </html>

@@ -14,7 +14,7 @@ if(!isset($_SESSION['userno'])){
 //for tommorow
 
 $yesterdaydate = date('Y-m-d', strtotime('yesterday'));
-$sqlt = "SELECT type, GROUP_CONCAT(users) AS users, SUM(price) AS total_price FROM meal WHERE date = '2023-03-02' GROUP BY type";
+$sqlt = "SELECT type, GROUP_CONCAT(users) AS users, SUM(price) AS total_price FROM meal WHERE date = '$yesterdaydate' GROUP BY type";
 
 $resultt = mysqli_query($conn, $sqlt);
 
@@ -25,9 +25,15 @@ $meal_typet = "lunch";
  if($rowt['type'] == '1'){
     $meal_typet = "dinner";
  }
+ if($rowt['users'] != ""){
+   
  $userst = explode(",", $rowt['users']);
  $no_of_userst = count($userst);
  $total_pricet = $rowt['total_price'];
+ }else{
+   $no_of_userst = 0;
+   $total_pricet = 0;
+ }
 }
 
 
@@ -72,7 +78,7 @@ $week_start = date('Y-m-d', strtotime('last Monday'));
 $week_end = date('Y-m-d', strtotime('next Sunday'));
 
 // Query to get the user data for the week
-$sqlg = "SELECT date, type, users AS total_users FROM meal 
+$sqlg = "SELECT date, type, users AS total_users, items FROM meal 
 WHERE date >= '2023-03-01' AND date <= '2023-03-07' GROUP BY date, type";
 
 $resultg = mysqli_query($conn, $sqlg);
@@ -80,6 +86,8 @@ $resultg = mysqli_query($conn, $sqlg);
 // Prepare the data for the chart
 $datag = array();
 $labelsg = array();
+$max = 0;
+$meal = "";
 
 while ($rowg = mysqli_fetch_assoc($resultg)) {
 $dateg = $rowg['date'];
@@ -89,12 +97,18 @@ if ($rowg['type'] == "1") {
 }
 $usersg = explode(",", $rowg['total_users']);
 $total_usersg = count($usersg);
+if ($total_usersg > $max) {
+    $max = $total_usersg;
+    $meal = $rowg['items'];
+}
 
 $datag[$meal_typeg][] = $total_usersg;
 if (!in_array($dateg, $labelsg)) {
     $labelsg[] = $dateg;
 }
 }
+
+$meal = explode("||", $meal);
 
 // Convert the data to JSON format
 $data_jsong = json_encode($datag);
@@ -119,11 +133,39 @@ $labels_jsong = json_encode($labelsg);
 
   <!-- Template Main CSS File -->
   <link href="assets/css/report.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+
 </head>
 
 <body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
 
-    <section class="section dashboard">
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">
+        <h1>Mess-Mate<span>.</span></h1>
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="admin_index.php">Home</a></li>
+          <li><a href="admin_profile.php">Profile</a></li>
+          <li><a href="report.php">Analysis Report</a></li>
+          <li><a href="#php">Contact</a></li>
+        </ul>
+      </nav><!-- .navbar -->
+
+    
+   
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+
+    </div>
+    <a class="log_btn" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i></a>
+  </header><!-- End Header -->
+
+  <div class="container report_div">
+  <section class="section dashboard">
       <div class="row">
 
         <!-- Left side columns -->
@@ -134,7 +176,11 @@ $labels_jsong = json_encode($labelsg);
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
                 <div class="card-body">
-                  <h5 class="card-title">Sales <span>| Yesterday</span></h5>
+                  <h5 class="card-title">Sales <span>| Yesterday
+                  <?php 
+                    echo $yesterdaydate;
+                  ?>
+                  </span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -195,6 +241,34 @@ $labels_jsong = json_encode($labelsg);
               </div>
 
             </div><!-- End Customers Card -->
+
+            <div class="col-xxl-4 col-xl-12">
+
+              <div class="card info-card customers-card">
+
+                <div class="card-body">
+                  <h5 class="card-title">Most Selling Meal <span>| Last Week</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6> <?php echo $max; ?> </h6>
+                      <span class="text-info small pt-2 ps-1"><?php 
+                      foreach ($meal as $key => $value) {
+                        echo $value;
+                        echo " ";
+                      }
+                      ?></span> 
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
           </div>
         </div><!-- End Left side columns -->
       </div>
@@ -270,12 +344,9 @@ var ctx = document.getElementById('user-chart').getContext('2d');
       </div>
     </div>
 </section> 
+  </div>
 
 
 </body>
-<script>
-    if (window.history.replaceState) {
-      window.history.replaceState(null, null, window.location.href);
-    }
-</script>
+
 </html>

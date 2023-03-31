@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2023 at 03:00 PM
+-- Generation Time: Mar 31, 2023 at 11:20 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -31,8 +31,8 @@ CREATE TABLE `meal` (
   `id` int(255) NOT NULL,
   `type` int(10) DEFAULT NULL,
   `items` varchar(255) DEFAULT NULL,
-  `users` varchar(255) DEFAULT NULL,
-  `added_user` varchar(255) DEFAULT NULL,
+  `users` varchar(255) DEFAULT '0',
+  `added_user` varchar(255) DEFAULT '0',
   `date` varchar(255) DEFAULT NULL,
   `price` int(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -56,7 +56,7 @@ INSERT INTO `meal` (`id`, `type`, `items`, `users`, `added_user`, `date`, `price
 (13, 1, 'roti||sak||dal||bhat||6as', '1,2,3,4', NULL, '2023-03-06', 50),
 (14, 0, 'roti||sak||dal||bhat||6as', '1,2,3,4,5,6,7,8,9,10,11', NULL, '2023-03-07', 50),
 (15, 1, 'roti||sak||dal||bhat||6as', '1,2,3,4,5', NULL, '2023-03-07', 50),
-(16, 1, 'roti||sak||dal||bhat||6as', NULL, NULL, '2023-03-30', 50);
+(16, 0, 'sak||||rotli||||dal||||bhat||||6as', '0,', '0', '2023-03-31', 50);
 
 -- --------------------------------------------------------
 
@@ -90,7 +90,9 @@ INSERT INTO `payment` (`user_id`, `invoice_id`, `t_meal`, `s_date`, `e_date`, `e
 (3, 'TS59725390', '15', '2023-03-01', '2023-03-15', '2023-05-14', '2', '750', '2023-03-30 17:06:15'),
 (1, 'TS93078543', '14', '2023-03-16', '2023-03-29', '2023-05-28', '1', '700', '2023-03-30 17:35:12'),
 (1, 'TS32433960', '15', '2023-03-09', '2023-03-23', '2023-05-22', '1', '750', '2023-03-30 17:36:20'),
-(1, 'TS89765431', '31', '2023-03-23', '2023-04-22', '2023-06-21', '1', '1472.5', '2023-03-30 17:36:39');
+(1, 'TS89765431', '31', '2023-03-23', '2023-04-22', '2023-06-21', '1', '1472.5', '2023-03-30 17:36:39'),
+(1, 'TS32146441', '6', '2023-04-24', '2023-04-29', '2023-06-28', '1', '300', '2023-03-31 00:40:52'),
+(1, 'TS32146441', '6', '2023-04-24', '2023-04-29', '2023-06-28', '1', '300', '2023-03-31 00:41:16');
 
 -- --------------------------------------------------------
 
@@ -103,7 +105,7 @@ CREATE TABLE `poll` (
   `pol` varchar(255) DEFAULT NULL,
   `options` varchar(255) DEFAULT NULL,
   `votes` varchar(255) DEFAULT NULL,
-  `users` varchar(255) DEFAULT NULL,
+  `users` varchar(255) DEFAULT '0',
   `date` varchar(255) DEFAULT NULL,
   `last_date` varchar(255) DEFAULT NULL,
   `total_votes` int(255) DEFAULT NULL,
@@ -115,7 +117,7 @@ CREATE TABLE `poll` (
 --
 
 INSERT INTO `poll` (`id`, `pol`, `options`, `votes`, `users`, `date`, `last_date`, `total_votes`, `future1`) VALUES
-(1, 'what will in dinner?', 'cholle||||alu||||mag||||punjabi', '4||||6||||1||||2', '11,1', NULL, NULL, 14, NULL);
+(1, 'what will in dinner?', 'cholle||||alu||||mag||||punjabi', '5||||6||||2||||2', ',1', '2023-03-31', '2023-04-01', 16, NULL);
 
 -- --------------------------------------------------------
 
@@ -129,15 +131,18 @@ CREATE TABLE `token` (
   `mobno` varchar(11) DEFAULT NULL,
   `tokens` int(100) DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT 1,
-  `estime` varchar(200) DEFAULT NULL
+  `estime` varchar(200) DEFAULT NULL,
+  `end_time` varchar(50) DEFAULT NULL,
+  `start_date` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `token`
 --
 
-INSERT INTO `token` (`id`, `userid`, `mobno`, `tokens`, `status`, `estime`) VALUES
-(1, 1, '9313268918', 20, 1, '2023-07-05');
+INSERT INTO `token` (`id`, `userid`, `mobno`, `tokens`, `status`, `estime`, `end_time`, `start_date`) VALUES
+(1, 1, '9313268918', 24, 1, '2023-06-28', '2023-04-29', '2023-04-24'),
+(2, 2, '9999999999', 19, 1, '2023-05-05', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -159,7 +164,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `mobile`, `email`, `password`, `hostel`) VALUES
-(1, 'Mayank', '9313268918', 'mrmayank6877@gmail.com', '231c413a3dd8d7739c98c1d36acd32e5', 0);
+(1, 'Mayank', '9313268918', 'mrmayank6877@gmail.com', '231c413a3dd8d7739c98c1d36acd32e5', 0),
+(9999, 'Mess Manager', '1234567890', 'mess@mail.com', '231c413a3dd8d7739c98c1d36acd32e5', 0);
 
 --
 -- Indexes for dumped tables
@@ -197,7 +203,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `meal`
 --
 ALTER TABLE `meal`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `poll`
@@ -209,13 +215,13 @@ ALTER TABLE `poll`
 -- AUTO_INCREMENT for table `token`
 --
 ALTER TABLE `token`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

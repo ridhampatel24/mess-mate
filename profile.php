@@ -9,8 +9,19 @@ if (!isset($_SESSION['userno'])) {
 
 $mobile = $_SESSION['userno'];
 $id = $_SESSION['id'];
-$sql1 = "SELECT * FROM `users` WHERE `mobile` = '$mobile'";
 
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['m_status']) && !empty($_POST) ) {
+  $meal_status = $_POST['m_status'];
+  if($meal_status == 'true')
+    $meal_status = 1;
+  else
+    $meal_status = 0;
+    
+  $sql = "UPDATE `token` SET `status` = '$meal_status' WHERE `userid` = '$id'";
+  $result = mysqli_query($conn, $sql);
+
+} 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,6 +57,11 @@ $sql1 = "SELECT * FROM `users` WHERE `mobile` = '$mobile'";
 </head>
 
 <body>
+<script>
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
+  </script>
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -79,25 +95,25 @@ $sql1 = "SELECT * FROM `users` WHERE `mobile` = '$mobile'";
     <div class="container py-5 h-100">
 
 
-    <?php 
+      <?php
 
-    $sql = "SELECT *
+      $sql = "SELECT *
     FROM users
     INNER JOIN token ON token.userid=users.id WHERE users.id=$id";
-    
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
 
-    $name = $row['name'];
-    $email = $row['email'];
-    $mobile = $row['mobile'];
-    $tokens = $row['tokens'];
-    $ex_day = (strtotime($row['estime']) - strtotime(date('d-m-Y')))/(60*60*24);
-    $e_date = date('d-m-Y', strtotime($row['end_date']));
+      $result = mysqli_query($conn, $sql);
+      $row = mysqli_fetch_assoc($result);
 
-    
-    
-    ?>
+      $name = $row['name'];
+      $email = $row['email'];
+      $mobile = $row['mobile'];
+      $tokens = $row['tokens'];
+      $ex_day = (strtotime($row['estime']) - strtotime(date('d-m-Y'))) / (60 * 60 * 24);
+      $e_date = date('d-m-Y', strtotime($row['end_time']));
+
+
+
+      ?>
       <div class="card" style="border-radius: 15px;">
         <div class="card-body p-4">
           <div class="d-flex text-black">
@@ -105,62 +121,83 @@ $sql1 = "SELECT * FROM `users` WHERE `mobile` = '$mobile'";
               <img src="assets/user.png" alt="Generic placeholder image" class="img-fluid" style="width: 180px; margin-top:60px; border-radius: 10px;">
             </div>
             <div class="flex-grow-1 ms-3">
-              <h5 class="mb-1"><?php echo $name;?></h5>
-              <p class="mb-2 pb-1" style="color: #2b2a2a;"><?php echo $email;?></p>
+              <h5 class="mb-1"><?php echo $name; ?></h5>
+              <p class="mb-2 pb-1" style="color: #2b2a2a;"><?php echo $email; ?></p>
 
               <div class="pro_detail">
                 <div class="pro_num">
                   <div>
                     <p class="small text-muted mb-1" style="color: #2b2a2a;">Mobile No.</p>
-                    <p class="mb-0">+91 <?php echo $mobile;?></p>
+                    <p class="mb-0">+91 <?php echo $mobile; ?></p>
                   </div>
                 </div>
 
                 <div class="pro_token">
                   <div>
                     <p class="small text-muted mb-1" style="color: #2b2a2a;">Tokens</p>
-                    <p class="mb-0"><?php echo $tokens;?></p>
+                    <p class="mb-0"><?php echo $tokens; ?></p>
                   </div>
                 </div>
 
                 <div class="pro_token">
                   <div>
                     <p class="small text-muted mb-1" style="color: #2b2a2a;">Expired</p>
-                    <p class="mb-0"><?php echo $ex_day;?> Days left</p>
+                    <p class="mb-0"><?php echo $ex_day; ?> Days left</p>
                   </div>
                 </div>
 
                 <div class="pro_token">
                   <div>
                     <p class="small text-muted mb-1" style="color: #2b2a2a;">Token End date</p>
-                    <p class="mb-0"><?php echo $e_date;?></p>
+                    <p class="mb-0"><?php echo $e_date; ?></p>
                   </div>
                 </div>
               </div>
 
               <div class="d-flex pt-1">
-                <?php 
-                if($tokens <= 0){
+                <?php
+                if ($tokens <= 0) {
                   echo '<button type="button" class="btn btn-outline-dark me-1 flex-grow-1" onclick="to_tokens()">Buy Tokens</button>';
-                }else{
+                } else {
                   echo '<button type="button" class="btn btn-outline-dark me-1 flex-grow-1" onclick="to_scaner()">Scan QR code</button>';
                 }
-              
-              ?>
+
+                ?>
                 <button type="button" class="btn btn-outline-dark me-1 flex-grow-1" onclick="to_payment()">Payment History</button>
               </div>
-              
-              <div class="d-flex justify-content-start rounded-3 p-2 mb-2">
-              <center>
-                <label class="switch">
-                  <input type="checkbox">
-                  <span class="slider round"></span>
-                </label>
 
-                <p class="mb-2"> Auto Plate Book</p>
+              <div class="d-flex justify-content-start rounded-3 p-2 mb-2">
+                <center>
+                  <form id="meal_status_form" method="POST">
+                    <?php
+                    $sql = "SELECT * FROM `token` WHERE `userid`= '$id';";
+                    $result4 = mysqli_query($conn, $sql);
+                    $row4 = mysqli_fetch_assoc($result4);
+                    if ($row4['status'] == '1') {
+                        
+                     echo '<label class="switch">
+                     <input type="checkbox" id="meal_status" checked name="meal_status" onclick="status()">
+                    
+                     <span class="slider round"></span>
+                   </label>';
+                    
+                    } else {
+                      echo '<label class="switch">
+                      <input type="checkbox" id="meal_status" name="meal_status" onclick="status()">
+                     
+                      <span class="slider round"></span>
+                    </label>';
+
+                    }
+                    ?>
+                    
+                    <input type="hidden" id="m_status" name="m_status">
+                  </form>
+
+                  <p class="mb-2"> Auto Plate Book</p>
                 </center>
               </div>
-              
+
             </div>
 
           </div>
@@ -171,7 +208,7 @@ $sql1 = "SELECT * FROM `users` WHERE `mobile` = '$mobile'";
 
     </div>
 
-  
+
 
   </section>
 
@@ -267,20 +304,26 @@ $sql1 = "SELECT * FROM `users` WHERE `mobile` = '$mobile'";
 
 </body>
 <script>
-    if (window.history.replaceState) {
-      window.history.replaceState(null, null, window.location.href);
-    }
-</script>
-<script>
+
+  function status() {
+    var m_status = document.getElementById("meal_status").checked;
+   console.log(m_status);
+   document.getElementById("m_status").value = m_status;
+   document.getElementById("meal_status_form").submit();
+
+  }
+
+
   function to_scaner() {
     window.location.href = "scaner.php";
   }
+
   function to_tokens() {
     window.location.href = "subscription.php";
   }
 
   function to_payment() {
-   
+
   }
 </script>
 
