@@ -7,10 +7,18 @@ if (!isset($_SESSION['userno']) && !isset($_SESSION['admin'])) {
   exit();
 }
 
-$mobile = $_SESSION['userno'];
-$id = $_SESSION['id'];
-$sql1 = "SELECT * FROM `users` WHERE `mobile` = '$mobile'";
+$tdate = date('Y-m-d');
 
+$sql = "SELECT * FROM meal WHERE `meal`.`date` = '$tdate' AND `meal`.`type` = '0'";
+$result = mysqli_query($conn, $sql);
+$num = mysqli_num_rows($result);
+
+
+
+if ($num == 0) {
+  echo"<script>alert('No meal available for today please create it!')</script>";
+  echo"<script>window.location.href='admin_profile.php'</script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,11 +63,7 @@ $sql1 = "SELECT * FROM `users` WHERE `mobile` = '$mobile'";
 
 
     <?php 
-    $tdate = date('Y-m-d');
-
-    $sql = "SELECT * FROM meal WHERE `meal`.`date` = '$tdate' AND `meal`.`type` = '0'";
-    $result = mysqli_query($conn, $sql);
-    $num = mysqli_num_rows($result);
+    
     if ($num > 0) {
       $row = mysqli_fetch_assoc($result);
       $message = $row['id']. "^" . $tdate;

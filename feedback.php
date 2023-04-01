@@ -24,6 +24,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     if($result1){
         header('location: profile.php');
+        
         exit();
     }
     else{
