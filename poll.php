@@ -2,6 +2,11 @@
 
 require 'database/include.php';
 
+if ($_SESSION['user_type'] != 'admin') {
+    header('location: login.php');
+    exit();
+  }
+
 
 if(isset($_POST['pollbtn'])){
     $poll = $_POST['poll'];
@@ -69,6 +74,7 @@ echo "
 }else{
     echo "
         <script>
+        alert('something went wrong');
             window.location.href = 'adminpoll.php';
         </script>";
     exit();

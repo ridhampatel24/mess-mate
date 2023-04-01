@@ -86,7 +86,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])){
 					</span>
 
                     <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" required name="name" placeholder="Name ">
+						<input class="input100" type="text" required name="name" placeholder="Name " maxlength="20">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-user" aria-hidden="true"></i>
@@ -94,7 +94,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])){
 					</div>
 
                     <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="email"  required name="email" placeholder="Email">
+						<input class="input100" type="email"  required name="email" placeholder="Email" maxlength="40">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -102,7 +102,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])){
 					</div>
                     
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" name="mobile" required placeholder="Mobile no">
+						<input class="input100" type="text" name="mobile" required placeholder="Mobile no" maxlength="10">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-phone" aria-hidden="true"></i>
@@ -162,4 +162,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])){
 	<script src="js/login.js"></script>
 
 </body>
+<script>
+
+</script>
 </html>

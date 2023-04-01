@@ -2,10 +2,10 @@
 
 require 'database/include.php';
 
-if (!isset($_SESSION['userno'])) {
+if ($_SESSION['user_type'] != 'admin') {
     header('location: login.php');
     exit();
-}
+  }
 
 ?>
 

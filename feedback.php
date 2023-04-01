@@ -3,8 +3,8 @@
 <?php
 require 'database/include.php';
 
-if(isset($_SESSION['user'])){
-	header('location: home.php');
+if(isset($_SESSION['user_type']) != 'user' ){
+	header('location: login.php');
 	exit();
 }
 

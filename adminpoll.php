@@ -3,9 +3,9 @@
 
 require 'database/include.php';
 
-if(!isset($_SESSION['userno'])){
-    header('location: login.php');
-    exit();
+if ($_SESSION['user_type'] != 'admin') {
+  header('location: login.php');
+  exit();
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['create'])){

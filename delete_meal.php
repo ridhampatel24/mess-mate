@@ -2,10 +2,10 @@
 
 require 'database/include.php';
 
-if(!isset($_SESSION['userno'])){
-  header('location: login.php');
-  exit();
-}
+if ($_SESSION['user_type'] != 'admin') {
+    header('location: login.php');
+    exit();
+  }
 
 if(isset($_POST['delete_lunch'])){
     $tdate = date('Y-m-d');

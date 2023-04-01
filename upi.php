@@ -2,7 +2,7 @@
 
 require 'database/include.php';
 
-if (!isset($_SESSION['userno']) && !isset($_SESSION['t_price'])){
+if ($_SESSION['user_type'] != 'user' && !isset($_SESSION['t_price'])){
   header('location: login.php');
   exit();
 }

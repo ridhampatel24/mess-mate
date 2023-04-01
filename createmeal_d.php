@@ -3,9 +3,9 @@
 
 require 'database/include.php';
 
-if(!isset($_SESSION['userno'])){
-    header('location: login.php');
-    exit();
+if ($_SESSION['user_type'] != 'admin') {
+  header('location: login.php');
+  exit();
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -50,6 +50,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             window.location.href = 'admin_index.php';
         </script>";
     }
+  }else{
+    echo "
+        <script>
+            alert('Something went wrong');
+            window.location.href = 'admin_index.php';
+        </script>";
   }
 
 ?>

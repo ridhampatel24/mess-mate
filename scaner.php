@@ -2,10 +2,10 @@
 <?php
 require 'database/include.php';
 
-if (!isset($_SESSION['userno'])) {
+if ($_SESSION['user_type'] != 'user') {
     header('location: login.php');
     exit();
-}
+  }
 
 
 if (isset($_POST['result'])) {

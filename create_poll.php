@@ -2,6 +2,11 @@
 
 require 'database/include.php';
 
+if ($_SESSION['user_type'] != 'admin') {
+    header('location: login.php');
+    exit();
+  }
+
 if(isset($_POST['create'])){
 
     $tdate = date("Y-m-d");
@@ -37,6 +42,12 @@ if(isset($_POST['create'])){
             window.location.href = 'admin_profile.php';
         </script>";
 }
+}else{
+    echo "
+        <script>
+            alert('Something went wrong');
+            window.location.href = 'admin_profile.php';
+        </script>";
 }
 
 

@@ -2,9 +2,17 @@
 
 require 'database/include.php';
 
-if(isset($_SESSION['user'])){
-	header('location: home.php');
+
+
+if(isset($_SESSION['user_type']) ){
+if($_SESSION['user_type'] == 'user' ){
+	header('location: index.php');
 	exit();
+}
+if($_SESSION['user_type'] == 'admin'){
+	header('location: admin_index.php');
+	exit();
+}
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])){
@@ -80,7 +88,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])){
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" required name="mobile" placeholder="Mobile no">
+						<input class="input100" type="text" required name="mobile" id="mobile"  oninput="mobile_num()" placeholder="Mobile no">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-phone" aria-hidden="true"></i>
@@ -134,5 +142,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])){
     if (window.history.replaceState) {
       window.history.replaceState(null, null, window.location.href);
     }
+
+	function mobile_num(){
+		var mobile = document.getElementById('mobile').value;
+		if(mobile.length > 10){
+			document.getElementById('mobile').value = mobile.slice(0,10);
+		}
+		if(mobile.length < 10){
+			document.getElementById('mobile').style.backgroundColor = "";
+		}
+	}
+
+	
   </script>
 </html>
