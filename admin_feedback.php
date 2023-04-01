@@ -59,7 +59,8 @@ if ($_SESSION['user_type'] != 'admin') {
         <ul>
           <li><a href="admin_index.php">Home</a></li>
           <li><a href="admin_profile.php">Profile</a></li>
-          <li><a href="#about">About</a></li>
+          <li><a href="report.php">Analysis Report</a></li>
+          <li><a href="admin_feedback.php">FeedBack</a></li>
           <li><a href="#php">Contact</a></li>
         </ul>
       </nav><!-- .navbar -->
