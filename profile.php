@@ -1,3 +1,4 @@
+
 <?php
 
 require 'database/include.php';
@@ -91,6 +92,75 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['m_status']) && !empty(
     </div>
     <a class="log_btn" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i></a>
   </header><!-- End Header -->
+
+  <!--Division for Modal-->
+<div id="myModal" class="modal fade" role="dialog">
+
+<!--Modal-->
+<div class="modal-dialog">
+
+  <!--Modal Content-->
+  <form action="feedback.php" method="post">
+  <div class="modal-content">
+
+    <!-- Modal Header-->
+    <div class="modal-header">
+      <h3>Feedback Request</h3>
+
+      <!--Close/Cross Button-->
+      <button type="button" class="close" data-dismiss="modal" style="color: white;">&times;</button>
+    </div>
+
+    <!-- Modal Body-->
+    <div class="modal-body text-center">
+      <i class="far fa-file-alt fa-4x mb-3 animated rotateIn icon1"></i>
+      <h3>Your opinion matters</h3>
+      <h5>Help us improve our product? <strong>Give us your feedback.</strong></h5>
+      <hr>
+      <h6>Your Rating</h6>
+    </div>
+
+    <!-- Radio Buttons for Rating-->
+    
+    <div class="form-check mb-4">
+      <input name="feedback" value="5" type="radio">
+      <label class="ml-3">Very good</label>
+    </div>
+    <div class="form-check mb-4">
+      <input name="feedback" value="4" type="radio">
+      <label class="ml-3">Good</label>
+    </div>
+    <div class="form-check mb-4">
+      <input name="feedback"  value="3" type="radio">
+      <label class="ml-3">Mediocre</label>
+    </div>
+    <div class="form-check mb-4">
+      <input name="feedback"  value="2" type="radio">
+      <label class="ml-3">Bad</label>
+    </div>
+    <div class="form-check mb-4">
+      <input name="feedback"  value="1" type="radio">
+      <label class="ml-3">Very Bad</label>
+    </div>
+
+    <!--Text Message-->
+    <div class="text-center">
+      <h4>What could we improve?</h4>
+    </div>
+    <textarea type="textarea" name="message" placeholder="Your Message" rows="3"></textarea>
+
+
+    <!-- Modal Footer-->
+    <div class="modal-footer">
+    <button type="submit" class="btn btn-success">Success</button>
+      <a href="" class="btn btn-outline-primary" data-dismiss="modal">Cancel</a>
+    </div>
+
+    
+  </div>
+  </form>
+</div>
+</div>
   <section class="vh-200" style="background-color: #FFCC97;">
     <div class="container py-5 h-100">
 
@@ -196,7 +266,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['m_status']) && !empty(
 
                   <p class="mb-2"> Auto Plate Book</p>
                 </center>
+                <div class="d-flex pt-1" style="padding-left: 20px">
+                    <button type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-outline-dark me-1 flex-grow-1" >Give Feedback</button>
+                </div>
               </div>
+              
 
             </div>
 

@@ -152,6 +152,7 @@ $labels_jsong = json_encode($labelsg);
           <li><a href="admin_profile.php">Profile</a></li>
           <li><a href="report.php">Analysis Report</a></li>
           <li><a href="#php">Contact</a></li>
+          <li><a href="conveter.php"><abbr title="Download data in excel file"><img src="assets\logo2.png" style="height:30px; width: 45px;"></abbr></a></li>
         </ul>
       </nav><!-- .navbar -->
 

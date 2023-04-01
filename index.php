@@ -74,13 +74,7 @@ if($token > 0 && $status && $tdate <= $edate){
   <link href="assets/css/style2.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/b4acf271a3.js" crossorigin="anonymous"></script>
 
-  <!-- =======================================================
-  * Template Name: Yummy
-  * Updated: Mar 10 2023 with Bootstrap v5.2.3
-  * Template URL: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+
 </head>
 
 <body>
