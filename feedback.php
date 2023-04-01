@@ -23,12 +23,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $result1 = mysqli_query($conn, $sql);
 
     if($result1){
-        header('location: profile.php');
-        
+        echo "
+            <script>
+                alert('Feedback Submitted');
+                window.location.href = 'profile.php';
+            </script>";
         exit();
     }
     else{
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "
+            <script>
+                alert('something went wrong');
+                window.location.href = 'profile.php';
+            </script>";
     }
 
 }

@@ -1,0 +1,78 @@
+/* Colors */
+:root {
+    --color-default: #212529;
+    --color-primary: #FFCC97;
+    --color-secondary: #FDF4EB;
+    --color-secondary-dark: #f4e0cd;
+    --color-primary-dark: #ffa954;
+    --color-sub-bag:white;
+  }
+  :root {
+    --font-default: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-primary: "Amatic SC", sans-serif;
+    --font-secondary: "Inter", sans-serif;
+  }
+
+  body {
+    background-color:var(--color-primary);
+    background-image: none  ;
+  }
+
+  .lm_container{
+    display: flex;
+    justify-content: center;
+}
+.title{
+    margin: 7% 0px 0px 0px;
+    display: flex;
+}
+.title h2{
+    margin: 0px 25%;
+}
+.meal{
+    margin: 20px;
+    display: flex;
+    width:55%;
+    background-color: var(--color-sub-bag);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.content{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.content div{
+    width: 50%;
+    font-size: 22px;
+    margin: 0px;
+}
+
+/* pay_history.php */
+
+.pay-text{
+    width: 60%;
+    border-radius: 15px;
+    font-size: 20px;
+    margin-top: 10%;
+    padding: 10px;
+    background-color: var(--color-sub-bag);
+    text-align: center;
+}
+.table_div{
+    display: flex;
+    margin-top: 5%; 
+    justify-content: center;
+}
+.table_div th{
+background-color: var(--color-primary-dark);
+color: var(--color-sub-bag);
+font-size: 20px;
+padding: 5px;
+}
+.table_div tr,td{
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    background-color: var(--color-sub-bag);
+}

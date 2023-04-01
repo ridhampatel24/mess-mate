@@ -53,7 +53,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['create'])){
 <div class="card">
             <div class="card-body">
               <h5 class="card-title">Create Poll</h5>
-              <form class="row g-3" method="post">
+              <form class="row g-3" action="create_poll.php" method="post">
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label" >Question</label>
                   <input type="text" class="form-control" name="que" required id="inputNanme4">

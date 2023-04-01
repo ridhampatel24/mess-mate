@@ -178,7 +178,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay_btn'])){
             <label>Number Of Month</label><br><input type="number" onchange="meal_count()" id="no_month" placeholder="0" max="2" min="1"><br>
 
             <label id="s_date_l">Start Date</label><label id="e_date_l">End Date</label><br>
-            <input id="s_date" name="s_date" type="date"><input id="e_date" type="date" disabled><br>
+            <input id="s_date" name="s_date" type="date" min= "<?php echo date('Y-m-d'); ?>"><input id="e_date" type="date" disabled><br>
 
 
             <div class="sub-type">

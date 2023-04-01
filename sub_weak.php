@@ -177,7 +177,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay_btn'])){
             <label>Number Of Weak</label><br><input type="number" id="no_weak" onchange="meal_count()" placeholder="0"><br>
 
             <label id="s_date_l">Start Date</label><label id="e_date_l">End Date</label><br>
-            <input id="s_date" type="date" name="s_date"><input id="e_date" type="date" name="e_date" disabled><br>
+            <input id="s_date" type="date" name="s_date" min= "<?php echo date('Y-m-d'); ?>"><input id="e_date" type="date" name="e_date" disabled><br>
 
             <div class="sub-type">
               <label>Meal Type</label><br>

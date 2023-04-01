@@ -62,11 +62,13 @@ $sql1 = "SELECT * FROM `users` WHERE `mobile` = '$mobile'";
           <li><a href="admin_index.php">Home</a></li>
           <li><a href="admin_profile.php">Profile</a></li>
           <li><a href="report.php">Analysis Report</a></li>
-          <li><a href="admin_feedback.php">FeedBack</a></li>
-          <li><a href="#php">Contact</a></li>
+          <li><a href="Inventory.php">Inventory Manage</a></li>
+          <li><a href="admin_feedback.php">Feedback Report</a></li>
         </ul>
       </nav><!-- .navbar -->
 
+
+      <a class="btn-book-a-table" href="subscription.php">Buy Token</a>
 
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
       <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
@@ -112,11 +114,36 @@ $sql1 = "SELECT * FROM `users` WHERE `mobile` = '$mobile'";
               </div>
 
               <div class="d-flex pt-1 admin_btn">
-                <button type="button" onclick = "window.location.href='qrpage_l.php';" class="btn btn-outline-dark me-1 flex-grow-1" >Lunch QR</button>
-                <button type="button" onclick = "window.location.href='qrpage_d.php';" class="btn btn-outline-dark me-1 flex-grow-1" >Dinner QR</button>
+
+              <?php
+              $today_date = date('Y-m-d'); 
+              $sql = "SELECT * FROM `meal` WHERE `type`='0' AND`date`='$today_date';";
+              $result = mysqli_query($conn, $sql);
+              $num = mysqli_num_rows($result);
+              if($num == 0){
+                echo "<button type='button' onclick = 'window.location.href=`qrpage_l.php`;' class='btn btn-outline-dark me-1 flex-grow-1' disabled>Lunch QR</button>";
+              }
+              else{
+                echo "<button type='button' onclick = 'window.location.href=`qrpage_l.php`;' class='btn btn-outline-dark me-1 flex-grow-1'>Lunch QR</button>";
+              }
+
+              $sql = "SELECT * FROM `meal` WHERE `type`='1' AND`date`='$today_date';";
+              $result = mysqli_query($conn, $sql);
+              $num = mysqli_num_rows($result);
+              if($num == 0){
+                echo "<button type='button' onclick = 'window.location.href=`qrpage_d.php`;' class='btn btn-outline-dark me-1 flex-grow-1' disabled>Dinner QR</button>";
+              }
+              else{
+                echo "<button type='button' onclick = 'window.location.href=`qrpage_d.php`;' class='btn btn-outline-dark me-1 flex-grow-1' >Dinner QR</button>";
+              }
+              
+              ?>
+                <!-- <button type="button" onclick = "window.location.href='qrpage_l.php';" class="btn btn-outline-dark me-1 flex-grow-1" >Lunch QR</button>
+              
+                <button type="button" onclick = "window.location.href='qrpage_d.php';" class="btn btn-outline-dark me-1 flex-grow-1" >Dinner QR</button> -->
                 <button type="button" onclick = "window.location.href='createmeal_l.php';" class="btn btn-outline-dark me-1 flex-grow-1" >Create Lunch menu</button>
                 <button type="button" onclick = "window.location.href='createmeal_d.php';"class="btn btn-outline-dark me-1 flex-grow-1" >Create Dinner menu</button>
-                <button type="button" onclick = "window.location.href='#';" class="btn btn-outline-dark me-1 flex-grow-1" >Live meal</button>
+                <button type="button" onclick = "window.location.href='live_meal.php';" class="btn btn-outline-dark me-1 flex-grow-1" >Live meal</button>
                 <button type="button" onclick = "window.location.href='adminpoll.php';" class="btn btn-outline-dark me-1 flex-grow-1" >Create Poll</button>
               </div>
               
@@ -203,7 +230,7 @@ $sql1 = "SELECT * FROM `users` WHERE `mobile` = '$mobile'";
         <!-- You can delete the links only if you purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">CodeAvengers</a>
+        Designed by <a href="">CodeAvengers</a>
       </div>
     </div>
 

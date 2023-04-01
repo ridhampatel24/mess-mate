@@ -7,6 +7,7 @@ if(!isset($_SESSION['userno'])){
   exit();
 }
 
+$tdate = date('Y-m-d');
 $mobile = $_SESSION['userno'];
 $sql1 = "SELECT * FROM `users` WHERE `mobile` = '$mobile'";
 $result1 = mysqli_query($conn, $sql1);
@@ -23,12 +24,21 @@ $sqltoken = "SELECT * FROM `token` WHERE `mobno` = '$mobile' ";
 $result = mysqli_query($conn, $sqltoken);
 $row = mysqli_fetch_assoc($result);
 
+$dont_go = 0;
 if($row > 0){
+$dont = $row['dontgo'];
+
+if($dont == $tdate){
+  $dont_go = 1;
+  $scan = 0;
+  $tkn = 0;
+  $status = 1;
+}else{
 $token = $row['tokens'];
 $status = $row['status'];
 $tdate = date('Y-m-d');
 $edate = $row['estime'];
-if($token < 0 || $edate < $tdate){
+if($token < 0 || $edate < $tdate){  
   $tkn = 1;
 }else{
   $tkn = 0;
@@ -38,11 +48,72 @@ if($token > 0 && $status && $tdate <= $edate){
 }else{
   $scan = 0;
 }
+}
 }else{
   $scan = 0;
   $tkn = 0;
   $status = 1;
 }
+
+
+//not coming today
+
+$not_come = "SELECT * from `token` WHERE status = 1 and tokens>0 and `dontgo` != '$tdate' AND `mobno` = '$_SESSION[userno]' ";
+$result_not_come = mysqli_query($conn, $not_come);
+$row_not_come = mysqli_num_rows($result_not_come);
+if($row_not_come == 0){
+  $not_come = 0;
+}else{
+  $not_come = 1;
+}
+
+?>
+
+<?php
+
+if(isset($_POST['prefrence'])){
+  
+  $time = date('H');
+  $tdate = date('Y-m-d');
+
+  if($time >= 0 && $time < 12){
+    $sql = "UPDATE `meal` SET `wastage_user`=`wastage_user`-1 WHERE `date` = '$tdate' AND `type` = '0' ";
+    $result = mysqli_query($conn, $sql);
+  }else{
+    $sql = "UPDATE `meal` SET `wastage_user`=`wastage_user`-1 WHERE `date` = '$tdate' AND `type` = '1'";
+    $result = mysqli_query($conn, $sql);
+  }
+
+  $sql1 = "UPDATE `token` SET `dontgo`='$tdate' WHERE `mobno` = '$mobile' ";
+  $result1 = mysqli_query($conn, $sql1);
+
+}
+
+?>
+
+<?php
+
+if(isset($_POST['reserv'])){
+
+  $id = $_POST['id'];
+
+  $sql = "SELECT * FROM `meal` WHERE `id` = '$id  ' ";
+  $result = mysqli_query($conn, $sql);
+  $row = mysqli_fetch_assoc($result);
+  $added_users = $row['added_user'];
+  $added_users = explode(",", $added_users);
+
+  if($added_users[0] == NULL){
+    $added_users = $_SESSION['id'];
+  }else{
+    $added_users = $added_users.",".$_SESSION['id'];
+  }
+
+  $sql = "UPDATE `meal` SET `added_user`= '$added_users'  WHERE `id` = '$id' ";
+  $result = mysqli_query($conn, $sql);
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,7 +145,13 @@ if($token > 0 && $status && $tdate <= $edate){
   <link href="assets/css/style2.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/b4acf271a3.js" crossorigin="anonymous"></script>
 
-
+  <!-- =======================================================
+  * Template Name: Yummy
+  * Updated: Mar 10 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
 
 <body>
@@ -123,11 +200,18 @@ if($token > 0 && $status && $tdate <= $edate){
     if($row != NULL){
       $items = explode('||', $row['items']);
       $users = explode(',', $row['users']);
+      $added_users = explode(',', $row['added_user']);
       $present = 0;
+
+      $added = 0;
+      if(in_array($uid,$added_users)){
+        $added = 1;
+      }
       if(in_array($uid,$users)){
         $present = 1;
       }
       $price = $row['price'];
+      $id = $row['id'];
 
 
       echo '
@@ -147,6 +231,8 @@ if($token > 0 && $status && $tdate <= $edate){
         echo '
           <div class="menu-opstions">
             ';
+            if($added == 0){
+            if($dont_go == 0){
             if($scan){
               echo '<button onclick="toscanner()" >scan</button>';
             }elseif($tkn){
@@ -154,10 +240,23 @@ if($token > 0 && $status && $tdate <= $edate){
             }elseif($status == 0){
               echo '<button>Activate</button>';
             }else{
-              echo '<button>Reserve a plate</button>';
+              echo '
+              <form action="" method="post">
+            <input type="hidden" name="id" value=" '.$id.'">
+              <button type="submit" name="reserv">Reserve a plate</button>
+              </form>';
             }
             echo '
-            <p>'.$price .' &#8377;</p>
+            <p>'.$price .' &#8377;</p>';
+            }
+            else{
+              echo  '<p>'.$price .' &#8377;</p>';
+            }
+          }else{
+            echo '<button onclick="toscanner()" >scan</button>
+            <p>'.$price .' &#8377;</p>';
+          }
+            echo'
           </div>
           ';
       }else{
@@ -215,7 +314,19 @@ if($token > 0 && $status && $tdate <= $edate){
 
       if($row != NULL){
         $items = explode('||', $row['items']);
+      $users = explode(',', $row['users']);
+      $added_users = explode(',', $row['added_user']);
+      $present = 0;
+
+      $added = 0;
+      if(in_array($uid,$added_users)){
+        $added = 1;
+      }
+      if(in_array($uid,$users)){
+        $present = 1;
+      }
       $price = $row['price'];
+      $id = $row['id'];
 
       echo '
       <div class="dinner">
@@ -229,20 +340,47 @@ if($token > 0 && $status && $tdate <= $edate){
         echo '<p>'.$item.'</p>';
       }
       echo '
-      </div>
-          <div class="menu-opstions">';
-          if($scan){
-            echo '<button>scan</button>';
-          }elseif($tkn){
-            echo '<button>Reserve a plate</button>';
-          }elseif($status == 0){
-            echo '<button>Activate</button>';
+      </div>';
+      if($present == 0){
+        echo '
+          <div class="menu-opstions">
+            ';
+            if($added == 0){
+            if($dont_go == 0){
+            if($scan){
+              echo '<button onclick="toscanner()" >scan</button>';
+            }elseif($tkn){
+              echo '<button>Reserve a plate</button>';
+            }elseif($status == 0){
+              echo '<button>Activate</button>';
+            }else{
+              echo '
+              <form action="" method="post">
+            <input type="hidden" name="id" value=" '.$id.'">
+              <button type="submit" name="reserv">Reserve a plate</button>
+              </form>';
+            }
+            echo '
+            <p>'.$price .' &#8377;</p>';
+            }
+            else{
+              echo  '<p>'.$price .' &#8377;</p>';
+            }
           }else{
-            echo '<button>Reserve a plate</button>';
+            echo '<button onclick="toscanner()" >scan</button>
+            <p>'.$price .' &#8377;</p>';
           }
-          echo '
-            <p>'.$price .' &#8377;</p>
+            echo'
           </div>
+          ';
+      }else{
+        echo '
+        <div class="menu-opstions">
+         <button   disabled> scan </button>
+         </div>
+        ';
+      }
+      echo '
         </div>
       </div>
       ';
@@ -377,10 +515,28 @@ if($token > 0 && $status && $tdate <= $edate){
       <div class="poll-title">
         Not Comming Today.
       </div>
-      <div class="poll-content">
-        I will not Eating Today's meal.
+      <?php
+      if($not_come == 0){
+        echo '
+        <div class="poll-content">
+          SEE YOU TOMORROW
       </div>
-      <center><button>Submit</button></center>
+        ';
+
+      }else{
+        echo '
+        <div class="poll-content">
+        I will not Eating Todays meal.
+      </div>
+      <center>
+        <form action="" method="POST">
+          <input type="hidden" name="prefrence" value="1">
+          <button name="prefrencebtn">Submit</button>
+        </form>
+      </center>
+        ';
+      }
+      ?>
     </div>
   </div>
   </div>
@@ -471,6 +627,11 @@ if($token > 0 && $status && $tdate <= $edate){
   <script src="assets/js/main.js"></script>
 
 </body>
+<script>
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
+  </script>
 <script>
   function toscanner(){
     window.location.href = "scaner.php";

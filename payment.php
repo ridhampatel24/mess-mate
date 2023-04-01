@@ -30,6 +30,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['payment_btn'])){
     $sql = "INSERT INTO `payment`(`user_id`, `invoice_id`, `t_meal`, `s_date`, `e_date`, `ex_date`, `type_meal`, `total`, `date_payment`) VALUES ('$user_id','$invoice_id','$t_meal','$s_date','$e_date','$ex_date','$type_meal','$total',NOW())";
     $result = mysqli_query($conn,$sql);
 
+    $check_token = "SELECT * FROM `token` WHERE `userid` = '$user_id'";
+    $result_check = mysqli_query($conn, $check_token);
+    $num = mysqli_num_rows($result_check);
+
+
+    if($num > 0){
     $sql2 = "UPDATE `token` SET `tokens` = `tokens` + '$t_meal', `start_date` = '$s_date', `end_time` = '$e_date', `estime` = '$ex_date' WHERE `userid` = '$user_id'";
     $result2 = mysqli_query($conn,$sql2);
 
@@ -47,6 +53,25 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['payment_btn'])){
         window.location.href = 'index.php';
         </script>";
     }
+}else{
+    $sql2 = "INSERT INTO `token`(`userid`, `mobno` ,`tokens`, `start_date`, `end_time`, `estime`) VALUES ('$user_id', '$_SESSION[userno]' ,'$t_meal','$s_date','$e_date','$ex_date')";
+    $result2 = mysqli_query($conn,$sql2);
+
+    if($result && $result2){
+        echo "
+        <script>
+        alert('Payment Successfull');
+        window.location.href = 'index.php';
+        </script>";
+    }
+    else{
+        echo "
+        <script>
+        alert('Payment Failed');
+        window.location.href = 'index.php';
+        </script>";
+    }
+}
 }
 
 ?>

@@ -2,10 +2,11 @@
 
 require 'database/include.php';
 
-if(!isset($_SESSION['userno'])){
+if ($_SESSION['user_type'] != 'admin') {
   header('location: login.php');
   exit();
 }
+
 
 ?>
 
@@ -127,8 +128,8 @@ if($dinner_row > 0){
           <li><a href="admin_index.php">Home</a></li>
           <li><a href="admin_profile.php">Profile</a></li>
           <li><a href="report.php">Analysis Report</a></li>
-          <li><a href="admin_feedback.php">FeedBack</a></li>
-          <li><a href="#php">Contact</a></li>
+          <li><a href="Inventory.php">Inventory Manage</a></li>
+          <li><a href="admin_feedback.php">Feedback Report</a></li>
         </ul>
       </nav><!-- .navbar -->
 
@@ -142,7 +143,7 @@ if($dinner_row > 0){
   </header><!-- End Header -->
 
   <center>
-    <h2 class="massage">Have a Look at Today's Menu</h2>
+    <h2 class="massage">Have a Look </h2>
   </center>
   <div class="container">
   

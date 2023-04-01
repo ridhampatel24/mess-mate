@@ -25,7 +25,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])){
 				$_SESSION['user_type'] = "admin";
 				echo "
 				<script>
-					window.location.href = 'admin_profile.php';
+					window.location.href = 'admin_index.php';
 				</script>";
 			}
 			else{
@@ -130,4 +130,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])){
 	<script src="js/login.js"></script>
 
 </body>
+<script>
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
+  </script>
 </html>

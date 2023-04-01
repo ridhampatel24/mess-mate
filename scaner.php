@@ -29,15 +29,33 @@ if (isset($_POST['result'])) {
     }
     else{
         if (in_array($_SESSION['id'], $users1)) {
-
-            $sql2 = "UPDATE `meal` SET `users`=CONCAT(`users`,',',$_SESSION[id]) WHERE `id` = '$str[0]'";
+            
+            if($row1['users'] == ""){
+                $row1['users'] = $_SESSION['id'];
+            }else{
+                $row1['users'] = $row1['users'] .','.$_SESSION['id'];
+            }
+            $sql2 = "UPDATE `meal` SET `users`= '$row1[users]' WHERE `id` = '$str[0]'";
             $result2 = mysqli_query($conn, $sql2);
 
         } else {
+            if($row1['users'] == ""){
+                $row1['users'] = $_SESSION['id'];
+            }else{
+                $row1['users'] = $row1['users'] .','.$_SESSION['id'];
+            }
 
-            echo "<script>alert('no1');</script>";
-            $sql = "UPDATE `token` SET `tokens`=`tokens`-1 WHERE `id` = 1;";
-            $sql2 = "UPDATE `meal` SET `users`=CONCAT(`users`,',',$_SESSION[id]) WHERE `id` = '$str[0]'";
+            if($str[1]==0){
+                $sql = "UPDATE `token` SET `tokens`=`tokens`-1 WHERE `userid` = '$_SESSION[id]'";
+            }
+            else{
+                $sql = "UPDATE `token` SET `d_tokens`=`d_tokens`-1 WHERE `userid` = '$_SESSION[id]'";
+            }
+            
+            $sql2 = "UPDATE `meal` SET `users`= '$row1[users]' WHERE `id` = '$str[0]'";
+            $sql_dec = "UPDATE `meal` SET `wastage_user`=`wastage_user`-1 WHERE `id` = '$str[0]'";
+
+            $result_dec = mysqli_query($conn, $sql_dec);
             $result2 = mysqli_query($conn, $sql2);
             $result = mysqli_query($conn, $sql);
         }

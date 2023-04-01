@@ -175,7 +175,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay_btn'])){
           <label>User Id</label><br>
           <input type="text"  disabled value="<?php echo $_SESSION['user_email'];?>"><br>
           <label id="s_date_l">Start Date</label><label id="e_date_l">End Date</label><br>
-          <input id="s_date" type="date" name="s_date"><input id="e_date" type="date" name="e_date"><br>
+          <input id="s_date" type="date" name="s_date" min= "<?php echo date('Y-m-d'); ?>"><input id="e_date" type="date" name="e_date" min= "<?php echo date('Y-m-d', strtotime('tomorrow') ); ?>" ><br>
 
 
           <div class="sub-type">

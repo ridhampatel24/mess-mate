@@ -60,13 +60,12 @@ if ($_SESSION['user_type'] != 'admin') {
           <li><a href="admin_index.php">Home</a></li>
           <li><a href="admin_profile.php">Profile</a></li>
           <li><a href="report.php">Analysis Report</a></li>
-          <li><a href="admin_feedback.php">FeedBack</a></li>
-          <li><a href="#php">Contact</a></li>
+          <li><a href="Inventory.php">Inventory Manage</a></li>
+          <li><a href="admin_feedback.php">Feedback Report</a></li>
         </ul>
       </nav><!-- .navbar -->
 
 
-      <a class="btn-book-a-table" href="subscription.php">Buy Token</a>
 
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
       <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
